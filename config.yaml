@@ -1,0 +1,8 @@
+input_dir: 'input'
+raw_expression_file: 'raw_expression_nohead.tsv'
+q3_expression_file: 'q3_expression_nohead.tsv'
+motif_file: 'motif_prior.tsv'
+ppi_file: 'ppi_prior.tsv'
+gpu_ids: [ 2, 3 ]
+lioness_threads: 4
+norm_types: [ 'raw', 'q3' ]
