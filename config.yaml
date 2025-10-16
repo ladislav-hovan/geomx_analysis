@@ -1,8 +1,7 @@
 input_dir: 'input'
-raw_expression_file: 'raw_expression_nohead.tsv'
-q3_expression_file: 'q3_expression_nohead.tsv'
-motif_file: 'motif_prior.tsv'
-ppi_file: 'ppi_prior.tsv'
-gpu_ids: [ 2, 3 ]
-lioness_threads: 4
-norm_types: [ 'raw', 'q3' ]
+output_dir: 'harmony_q3'
+expression_file: 'data/batch_123/harmony_q3_norm_filt.tsv'
+motif_file: 'priors/new_priors/motif_prior_names_2024.tsv'
+ppi_file: 'priors/new_priors/ppi_prior_2024.tsv'
+gpu_id: 3
+lioness_threads: 8
