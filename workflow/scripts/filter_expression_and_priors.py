@@ -5,8 +5,6 @@ import pandas as pd
 
 from pathlib import Path
 
-from lib import load_file
-
 ### Functions ###
 def filter_expression_and_priors(
     expression_path: Path,
@@ -38,7 +36,7 @@ def filter_expression_and_priors(
     """
 
     # Remove genes with zero expression
-    df = load_file(expression_path)
+    df = pd.read_table(expression_path)
     mask = ((df > 0).sum(axis=1) == df.shape[1])
     df_filt = df.loc[mask]
 
@@ -63,7 +61,8 @@ def filter_expression_and_priors(
     ppi_prior_common = ppi_prior.loc[mask]
 
     # Save everything properly
-    df_common.sort_index().to_csv(expression_output, sep='\t', header=False)
+    df_common.sort_index().to_csv(expression_output, sep='\t',
+        index_label=False)
     motif_prior_common.sort_values(['tf', 'gene']).to_csv(motif_prior_output,
         sep='\t', index=False, header=False)
     ppi_prior_common.sort_values(['tf1', 'tf2']).to_csv(ppi_prior_output,
@@ -87,13 +86,13 @@ if __name__ == '__main__':
     parser.add_argument('-ppo', '--ppi-prior-output', dest='ppi_p_o',
         help='file to save the filtered PPI prior into', metavar='FILE')
 
-    parser.parse_args()
+    args = parser.parse_args()
 
     filter_expression_and_priors(
-        parser.expression,
-        parser.motif_p,
-        parser.ppi_p,
-        parser.expression_o,
-        parser.motif_p_o,
-        parser.ppi_p_o,
+        expression_path=args.expression,
+        motif_prior_path=args.motif_p,
+        ppi_prior_path=args.ppi_p,
+        expression_output=args.expression_o,
+        motif_prior_output=args.motif_p_o,
+        ppi_prior_output=args.ppi_p_o,
     )

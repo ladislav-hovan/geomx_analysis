@@ -20,22 +20,24 @@ else:
 ### Config variables ###
 input_dir = config['input_dir']
 output_dir = config['output_dir']
+outlier_ids = config['outlier_ids']
+if outlier_ids is None:
+    outlier_ids = []
 
 ### Input and output variables ###
-include: join('workflow', 'variables.smk')
+include: join('rules', 'variables.smk')
 
 ### Rules ###
 rule all:
     input:
-        INDEGREE_FILE
+        F_EXPRESSION_FILE
+        # INDEGREE_FILE
     default_target:
         True
 
-include: join('workflow', 'preprocessing.smk')
-
-include: join('workflow', 'networks_common.smk')
+include: join('rules', 'preprocessing.smk')
 
 if USE_GPU:
-    include: join('workflow', 'networks_gpu.smk')
+    include: join('rules', 'networks_gpu.smk')
 else:
-    include: join('workflow', 'networks_cpu.smk')
+    include: join('rules', 'networks_cpu.smk')

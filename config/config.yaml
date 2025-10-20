@@ -1,0 +1,10 @@
+input_dir: "resources"
+output_dir: "results/harmony_q3"
+expression_file: "data/batch_123/harmony_q3_norm.tsv"
+outlier_ids:
+  # - "DSP-1001660037684-F-A12.dcc"
+  # - "DSP-1001660016658-B-B05.dcc"
+motif_file: "priors/new_priors/motif_prior_names_2024.tsv"
+ppi_file: "priors/new_priors/ppi_prior_2024.tsv"
+gpu_id: 3
+lioness_threads: 8

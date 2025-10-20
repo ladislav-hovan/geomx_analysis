@@ -1,7 +1,0 @@
-input_dir: 'input'
-output_dir: 'harmony_q3'
-expression_file: 'data/batch_123/harmony_q3_norm_filt.tsv'
-motif_file: 'priors/new_priors/motif_prior_names_2024.tsv'
-ppi_file: 'priors/new_priors/ppi_prior_2024.tsv'
-gpu_id: 3
-lioness_threads: 8
