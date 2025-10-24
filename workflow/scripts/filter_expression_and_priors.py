@@ -35,18 +35,15 @@ def filter_expression_and_priors(
         Path to the file where the PPI prior will be saved
     """
 
-    # Remove genes with zero expression
     df = pd.read_table(expression_path)
-    mask = ((df > 0).sum(axis=1) == df.shape[1])
-    df_filt = df.loc[mask]
 
     # Ensure correspondence between motif prior and expression
     motif_prior = pd.read_csv(motif_prior_path, sep='\t',
         names=['tf', 'gene', 'edge'])
-    df_genes = set(df_filt.index)
+    df_genes = set(df.index)
     motif_prior_genes = set(motif_prior['gene'].unique())
     common_genes = df_genes.intersection(motif_prior_genes)
-    df_common = df_filt.loc[list(common_genes)]
+    df_common = df.loc[list(common_genes)]
     mask = motif_prior['gene'].isin(common_genes)
     motif_prior_common = motif_prior.loc[mask]
 

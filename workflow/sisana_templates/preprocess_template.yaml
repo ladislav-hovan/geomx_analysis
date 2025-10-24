@@ -1,0 +1,5 @@
+preprocess:
+  exp_file: {expression} # Path to expression file, which MUST CONTAIN A HEADER
+  number: 1 # Number of samples a gene must be expressed in
+  outdir: {output_dir} # The directory to save the output to
+  filetype: tsv
