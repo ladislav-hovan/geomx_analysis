@@ -29,6 +29,9 @@ use CPUs only.
 The features already available are:
 - Cleanup of expression data and prior networks
 - Generation of LIONESS networks
+- Comparison of experimental groups
+- GSEA calculation
+- Volcano plots
 
 
 ## Setup
@@ -44,11 +47,12 @@ snakemake --cores=10 --resources gpus=1
 
 It is assumed that all the input is present and that the settings in the
 `config.yaml` file are correct.
-Relevant settings are:
+Some of the relevant settings are:
 - `input_dir`: the directory containing the input files
 - `expression_file`: name of the gene expression file
 - `motif_file`: name of the motif prior file
 - `ppi_file`: name of the PPI prior file
+- `metadata_file`: name of the metadata file
 - `gpu_id`: the ID of GPU to use
 
 
@@ -58,10 +62,12 @@ The project is: _in progress_.
 
 ## Room for Improvement
 Room for improvement:
-- Convert the pipeline to use SiSaNA
+- Fix issues with the volcano plot labels
+- Specification of comparisons in the config file
 
 To do:
-- Analysis part
+- Paired analysis with limma
+- Final report
 - Container
 
 
