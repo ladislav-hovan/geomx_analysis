@@ -1,28 +1,89 @@
-rule create_mapfile:
+rule copy_expression:
     input:
-        script = join(script_dir, 'create_mapfile.py'),
-        metadata = join(input_dir, config['metadata_file']),
+        script = join(script_dir, 'convert_to_csv.py'),
+        expr = PP_EXPRESSION_FILE,
     output:
-        mapfile = join(output_dir, 'comparisons', '{column}', '{modality}',
-            'groups.tsv'),
+        expr = PP_EXPRESSION_COPY,
     shell:
         """
         {input.script} \
-        -f 
+        -i {input.expr} \
+        -o {output.expr}
+        """
+
+rule create_mapfile:
+    input:
+        script = join(script_dir, 'create_mapfile.py'),
+        metadata = CLEAN_METADATA_FILE,
+    output:
+        mapfile = MAPFILE,
+    wildcard_constraints:
+        # Doesn't contain any equal signs - that's reserved for restricted
+        column = '[a-zA-Z0-9_]+',
+    shell:
+        """
+        {input.script} \
+        -m {input.metadata} \
+        -c {wildcards.column} \
+        -o {output.mapfile}
+        """
+
+rule create_restricted_mapfile:
+    input:
+        script = join(script_dir, 'create_mapfile.py'),
+        metadata = CLEAN_METADATA_FILE,
+    output:
+        mapfile = RESTRICTED_MAPFILE,
+    shell:
+        """
+        {input.script} \
+        -m {input.metadata} \
+        -sc {wildcards.select_column} \
+        -sv {wildcards.select_value} \
+        -c {wildcards.column} \
+        -o {output.mapfile}
         """
 
 rule compare_groups:
     input:
         script = join(script_dir, 'fill_out_template.py'),
         template = join(template_dir, 'compare_template.yaml'),
-        data = join(output_dir, 'lioness_output', 'lioness_{modality}.csv'),
-        mapfile = join(output_dir, 'comparisons', '{column}', '{modality}',
-            'groups.tsv'),
+        data = LIONESS_OUTPUT,
+        mapfile = MAPFILE,
     output:
-        config = join(output_dir, 'comparisons', '{column}', '{modality}', '')
-        join(output_dir, 'comparisons', '{column}', '{modality}',
-            '{groupA}_vs_{groupB}...')
+        config = COMPARE_CONFIG,
+        t_comparison = temp(T_COMPARE_FILE),
+        t_ranks = temp(T_COMPARE_RANKS),
+    params:
+        compare_dir = subpath(output.t_ranks, parent=True),
     shell:
         """
-        
+        {input.script} \
+        -t {input.template} \
+        -o {output.config} \
+        -s datafile {input.data} \
+        -s mapfile {input.mapfile} \
+        -s datatype {wildcards.modality} \
+        -s groupA {wildcards.groupA} \
+        -s groupB {wildcards.groupB} \
+        -s test {wildcards.test} \
+        -s rank_metric {wildcards.metric} \
+        -s output_dir {params.compare_dir}
+
+        sisana compare {output.config}
+        """
+
+rule rename_compare_files:
+    input:
+        t_comparison = T_COMPARE_FILE,
+        t_ranks = T_COMPARE_RANKS,
+    output:
+        comparison = COMPARE_FILE,
+        ranks = COMPARE_RANKS,
+    params:
+        compare_dir = subpath(output.ranks, parent=True),
+    shell:
+        """
+        mv {input.t_comparison} {output.comparison}
+        mv {input.t_ranks} {output.ranks}
         """

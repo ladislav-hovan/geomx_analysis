@@ -1,17 +1,35 @@
-rule remove_outliers:
+rule remove_outliers_expression:
     input:
         script = join(script_dir, 'remove_outliers.py'),
-        expr = EXPRESSION_FILE,
+        file = EXPRESSION_FILE,
     output:
-        expr = CLEAN_EXPRESSION_FILE,
+        file = CLEAN_EXPRESSION_FILE,
     params:
         ids = outlier_ids,
     shell:
         """
         {input.script} \
-        -i {input.expr} \
+        -i {input.file} \
         -id {params.ids} \
-        -o {output.expr}
+        -o {output.file} \
+        -a 1
+        """
+
+rule remove_outliers_metadata:
+    input:
+        script = join(script_dir, 'remove_outliers.py'),
+        file = METADATA_FILE,
+    output:
+        file = CLEAN_METADATA_FILE,
+    params:
+        ids = outlier_ids,
+    shell:
+        """
+        {input.script} \
+        -i {input.file} \
+        -id {params.ids} \
+        -o {output.file} \
+        -a 0
         """
 
 rule filter_expression_and_priors:
@@ -35,8 +53,6 @@ rule filter_expression_and_priors:
         -ppo {output.ppi}
         """
 
-preprocess_dir = dirname(PP_EXPRESSION_FILE)
-
 rule preprocess_input_files:
     input:
         script = join(script_dir, 'fill_out_template.py'),
@@ -45,13 +61,15 @@ rule preprocess_input_files:
     output:
         config = PP_CONFIG,
         expr = PP_EXPRESSION_FILE,
+    params:
+        preprocess_dir = subpath(output.expr, parent=True),
     shell:
         """
         {input.script} \
         -t {input.template} \
         -o {output.config} \
         -s expression {input.expr} \
-        -s output_dir {preprocess_dir}
+        -s output_dir {params.preprocess_dir}
 
         sisana preprocess {output.config}
         """

@@ -29,7 +29,7 @@ def fill_out_template(
     f = open(template_path, 'r')
     content = f.read()
     filled = content.format(**subs)
-    
+
     of = open(output_path, 'w')
     of.write(filled)
 

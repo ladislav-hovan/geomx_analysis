@@ -8,6 +8,19 @@ outlier_ids:
   - "DSP-1001660016658-B-B05.dcc"
 motif_file: "priors/new_priors/motif_prior_names_2024.tsv"
 ppi_file: "priors/new_priors/ppi_prior_2024.tsv"
-metadata_file: ""
+metadata_file: "data/batch_123/annotations_mod.tsv"
 gpu_id: 3
 lioness_threads: 8
+modalities:
+  - "expression"
+  - "indegree"
+  - "outdegree"
+tests:
+  - "mw"
+metrics:
+  - "mediandiff"
+  - "meandiff"
+gene_sets:
+  Hallmarks: "gene_sets/h.all.v2025.1.Hs.symbols.gmt"
+  # Biological_process: "gene_sets/c5.go.bp.v2025.1.Hs.symbols.gmt"
+  KEGG_Medicus: "gene_sets/c2.cp.kegg_medicus.v2025.1.Hs.symbols.gmt"

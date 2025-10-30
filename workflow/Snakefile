@@ -21,14 +21,44 @@ if outlier_ids is None:
 ### Input and output variables ###
 include: join('rules', 'variables.smk')
 
+### Targets ###
+TARGET_COMBINATIONS = expand(
+    join('{column}', '{groupA}_{groupB}'),
+    zip,
+    column=['segment', 'segment=stroma__NACT_status',
+        'segment=tumor__NACT_status'],
+    groupA=['stroma', 'pre', 'pre'],
+    groupB=['tumor', 'post', 'post'],
+)
+TARGET_DOTPLOTS = expand(
+    join(output_dir, 'gsea', '{combination}', '{modality}', '{test}',
+        '{metric}', '{geneset_name}', 'dotplot.png'),
+    combination=TARGET_COMBINATIONS,
+    modality=config['modalities'],
+    test=config['tests'],
+    metric=config['metrics'],
+    geneset_name=config['gene_sets'],
+)
+TARGET_VOLCANO_PLOTS = expand(
+    join(output_dir, 'volcano', '{combination}', '{modality}', '{test}',
+        '{metric}', '0.05', 'volcano_plot.png'),
+    combination=TARGET_COMBINATIONS,
+    modality=config['modalities'],
+    test=config['tests'],
+    metric=config['metrics'],
+)
+
 ### Rules ###
 rule all:
     input:
+        TARGET_DOTPLOTS,
+        TARGET_VOLCANO_PLOTS,
         INDEGREE_FILE,
-        OUTDEGREE_FILE,
     default_target:
         True
 
 include: join('rules', 'preprocessing.smk')
 include: join('rules', 'networks.smk')
 include: join('rules', 'comparison.smk')
+include: join('rules', 'gsea.smk')
+include: join('rules', 'volcano.smk')
