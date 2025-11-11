@@ -22,5 +22,6 @@ metrics:
   - "meandiff"
 gene_sets:
   Hallmarks: "gene_sets/h.all.v2025.1.Hs.symbols.gmt"
-  # Biological_process: "gene_sets/c5.go.bp.v2025.1.Hs.symbols.gmt"
+  Biological_process: "gene_sets/c5.go.bp.v2025.1.Hs.symbols.gmt"
   KEGG_Medicus: "gene_sets/c2.cp.kegg_medicus.v2025.1.Hs.symbols.gmt"
+  Reactome: "gene_sets/ReactomePathways.gmt"

@@ -1,0 +1,20 @@
+[workspace]
+authors = ["Ladislav Hovan <ladislav.hovan@ncmbm.uio.no>"]
+channels = ["conda-forge", "netzoo", "bioconda"]
+name = "analysis_pipeline"
+platforms = ["linux-64"]
+version = "1.0.0"
+
+[tasks]
+snakemake = "snakemake"
+
+[dependencies]
+bioconductor-limma = ">=3.62.1,<4"
+netzoopy = ">=0.10.9,<0.11"
+numpy = ">=2.3.4,<3"
+pandas = ">=2.3.3,<3"
+python = "==3.13"
+snakemake = ">=9.13.7,<10"
+
+[pypi-dependencies]
+sisana = ">=1.5.2.post1, <2"

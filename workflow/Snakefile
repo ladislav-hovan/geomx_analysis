@@ -22,14 +22,17 @@ if outlier_ids is None:
 include: join('rules', 'variables.smk')
 
 ### Targets ###
-TARGET_COMBINATIONS = expand(
-    join('{column}', '{groupA}_{groupB}'),
-    zip,
-    column=['segment', 'segment=stroma__NACT_status',
-        'segment=tumor__NACT_status'],
-    groupA=['stroma', 'pre', 'pre'],
-    groupB=['tumor', 'post', 'post'],
-)
+# The order is: column, groupA, groupB
+# If you want to constrain a different column to a value (subset the samples),
+# you can specify the column as 'column1=value__column2'
+TARGET_COMBINATIONS = [
+    join('{0}', '{1}_{2}').format(*combs) for combs in
+    [
+        ['segment', 'stroma', 'tumor'],
+        ['segment=stroma__NACT_status', 'pre', 'post'],
+        ['segment=tumor__NACT_status', 'pre', 'post'],
+    ]
+]
 TARGET_DOTPLOTS = expand(
     join(output_dir, 'gsea', '{combination}', '{modality}', '{test}',
         '{metric}', '{geneset_name}', 'dotplot.png'),
@@ -62,3 +65,4 @@ include: join('rules', 'networks.smk')
 include: join('rules', 'comparison.smk')
 include: join('rules', 'gsea.smk')
 include: join('rules', 'volcano.smk')
+include: join('rules', 'limma.smk')
