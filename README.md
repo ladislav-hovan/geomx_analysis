@@ -62,8 +62,10 @@ The project is: _in progress_.
 
 ## Room for Improvement
 Room for improvement:
-- Fix issues with the volcano plot labels
-- Specification of comparisons in the config file
+- Add a conda environment
+- Figure out how many CPUs GSEA is using and adjust threads accordingly
+- Move condition comparison settings to config
+- Fix the GSEA colourbar placement issue
 
 To do:
 - Paired analysis with limma
@@ -72,11 +74,15 @@ To do:
 
 
 ## Acknowledgements
-Many thanks to the members of the 
-[Kuijjer group](https://www.kuijjerlab.org/) 
+Many thanks to the members of the
+[Kuijjer group](https://www.kuijjerlab.org/)
 at NCMBM/UH for their feedback and support.
+I would also like to thank the
+[Färkkilä group](https://farkkilab.org/)
+at UH who generated the GeoMx data, especially Iga for preprocessing it
+and her insights.
 
-This README is based on a template made by 
+This README is based on a template made by
 [@flynerdpl](https://www.flynerd.pl/).
 
 
@@ -86,5 +92,5 @@ Feel free to contact me!
 
 
 ## License
-This project is open source and available under the 
+This project is open source and available under the
 [GNU General Public License v3](LICENSE).

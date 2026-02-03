@@ -1,6 +1,8 @@
+### Helper functions ###
 def get_difftype(
     metric: str,
 ) -> str:
+    # TODO: Add docstring
 
     if 'median' in metric:
         return 'median'
@@ -12,7 +14,7 @@ def get_x_thresh(
     modality: str,
 ) -> float:
     """
-    
+    TODO: Complete
 
     Parameters
     ----------
@@ -37,9 +39,9 @@ def get_x_thresh(
         elif modality == 'outdegree':
             return 100
     # "Sensible" default
-    return 2    
+    return 2
 
-
+### Rules ###
 rule create_volcanoplot:
     input:
         script = join(script_dir, 'fill_out_template.py'),

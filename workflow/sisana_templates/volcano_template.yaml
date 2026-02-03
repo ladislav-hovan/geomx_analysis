@@ -10,4 +10,4 @@ visualize:
     difftype: {difftype} # Choices are 'median' or 'mean'. Enter whether you are plotting the differences in medians or means. 
     outdir: {output_dir} # The directory to save the output to
     genelist: # ./example_inputs/volcano_plot_genes.txt # [OPTIONAL, BUT DON'T DELETE] If you have a list of genes you want to label in a .txt file, no header, enter them here. Otherwise, keep this blank and only the top genes (number dictated by numlabels) will be labeled 
-    numlabels: # [OPTIONAL, BUT DON'T DELETE] Maximum number of values to label on each half of the plot. Default value is 15. Will not be used if a file is given for genelist.
+    numlabels: 15 # [OPTIONAL, BUT DON'T DELETE] Maximum number of values to label on each half of the plot. Default value is 15. Will not be used if a file is given for genelist.

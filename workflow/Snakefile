@@ -50,10 +50,25 @@ TARGET_VOLCANO_PLOTS = expand(
     test=config['tests'],
     metric=config['metrics'],
 )
+LIMMA_COMBINATIONS = [
+    join('{0}', '{1}', '{2}_{3}').format(*combs) for combs in
+    [
+        ['patient+main_batch_nr+ROI_index_tCycIF', 
+            'segment', 'stroma', 'tumor'],
+        ['patient', 'segment=stroma__NACT_status', 'pre', 'post'],
+        ['patient', 'segment=tumor__NACT_status', 'pre', 'post'],
+    ]
+]
+TARGET_LIMMA = expand(
+    join(output_dir, 'limma', '{combination}', '{modality}', 'results.tsv'),
+    combination=LIMMA_COMBINATIONS,
+    modality=config['modalities'],
+)
 
 ### Rules ###
 rule all:
     input:
+        TARGET_LIMMA,
         TARGET_DOTPLOTS,
         TARGET_VOLCANO_PLOTS,
         INDEGREE_FILE,

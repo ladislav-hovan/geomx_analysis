@@ -67,3 +67,11 @@ VOLCANO_DIR = join(output_dir, 'volcano', '{column}', '{groupA}_{groupB}',
 VOLCANO_CONFIG = join(VOLCANO_DIR, 'config.yaml')
 T_VOLCANO_PLOT = join(VOLCANO_DIR, 'volcano_plot_adjp_{pval}.png')
 VOLCANO_PLOT = join(VOLCANO_DIR, 'volcano_plot.png')
+
+### Limma ###
+TARGETS_FILE = join(output_dir, 'limma', '{pairing}', '{column}',
+    'targets.tsv')
+RESTRICTED_TARGETS_FILE = join(output_dir, 'limma', '{pairing}',
+    '{select_column}={select_value}__{column}', 'targets.tsv')
+LIMMA_DIR = join(output_dir, 'limma', '{pairing}', '{column}',
+    '{groupA}_{groupB}')
