@@ -64,11 +64,19 @@ TARGET_LIMMA = expand(
     combination=LIMMA_COMBINATIONS,
     modality=config['modalities'],
 )
+TARGET_LIMMA_GSEA = expand(
+    join(output_dir, 'limma', '{combination}', '{modality}', 'gsea',
+        '{geneset_name}', 'dotplot.png'),
+    combination=LIMMA_COMBINATIONS,
+    modality=config['modalities'],
+    geneset_name=config['gene_sets'],
+)
 
 ### Rules ###
 rule all:
     input:
         TARGET_LIMMA,
+        TARGET_LIMMA_GSEA,
         TARGET_DOTPLOTS,
         TARGET_VOLCANO_PLOTS,
         INDEGREE_FILE,
