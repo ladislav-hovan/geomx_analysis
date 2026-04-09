@@ -50,10 +50,13 @@ TARGET_VOLCANO_PLOTS = expand(
     test=config['tests'],
     metric=config['metrics'],
 )
+# The order is: combination to be used for pairing, column, groupA, groupB
+# If you want to constrain a different column to a value (subset the samples),
+# you can specify the column as 'column1=value__column2'
 LIMMA_COMBINATIONS = [
     join('{0}', '{1}', '{2}_{3}').format(*combs) for combs in
     [
-        ['patient+main_batch_nr+ROI_index_tCycIF', 
+        ['patient+main_batch_nr+ROI_index_tCycIF',
             'segment', 'stroma', 'tumor'],
         ['patient', 'segment=stroma__NACT_status', 'pre', 'post'],
         ['patient', 'segment=tumor__NACT_status', 'pre', 'post'],

@@ -2,7 +2,19 @@
 def get_difftype(
     metric: str,
 ) -> str:
-    # TODO: Add docstring
+    """
+    Converts the name of the metric to a difference type.
+
+    Parameters
+    ----------
+    metric : str
+        Name of the metric
+
+    Returns
+    -------
+    str
+        Inferred difference type
+    """
 
     if 'median' in metric:
         return 'median'
@@ -14,19 +26,20 @@ def get_x_thresh(
     modality: str,
 ) -> float:
     """
-    TODO: Complete
+    Provides a threshold for the difference significance based
+    on the name of the metric and the modality.
 
     Parameters
     ----------
     metric : str
-        _description_
+        Name of the metric
     modality : str
-        _description_
+        Modality of the data
 
     Returns
     -------
     float
-        _description_
+        Threshold for the difference
     """
 
     if metric == 'meandiff':

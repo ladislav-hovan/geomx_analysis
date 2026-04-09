@@ -59,7 +59,8 @@ rule create_limma_rankfile:
         import pandas as pd
 
         data = pd.read_table(input['limma_results'], index_col=0)
-        data['t'].sort_values(ascending=False).to_csv(output['limma_ranks'], sep='\t', header=False)
+        data['t'].sort_values(ascending=False).to_csv(output['limma_ranks'],
+            sep='\t', header=False)
 
 rule run_gsea_on_limma:
     input:
